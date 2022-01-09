@@ -1,5 +1,4 @@
-from linebot.models import (MessageEvent, TextMessage,
-                            TextSendMessage, ImageSendMessage, LocationSendMessage)
+from linebot.models import (MessageEvent, TextMessage,TextSendMessage, ImageSendMessage, LocationSendMessage)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot import (LineBotApi, WebhookHandler)
 from bs4 import BeautifulSoup
@@ -13,7 +12,7 @@ from firebase_admin import credentials, firestore
 cred = credentials.Certificate("firebasekey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
-with open('setting.json', 'r', encoding='utf8') as jfile:
+with open('key.json', 'r', encoding='utf8') as jfile:
     jdata = json.load(jfile)
 line_bot_api = LineBotApi(jdata['token'])
 handler = WebhookHandler(jdata['channel'])
@@ -22,7 +21,7 @@ handler = WebhookHandler(jdata['channel'])
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def index():
     return render_template("index.html")
 
