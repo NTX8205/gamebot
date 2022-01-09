@@ -4,9 +4,7 @@ from linebot import (LineBotApi, WebhookHandler)
 from bs4 import BeautifulSoup
 import json
 import requests
-import subprocess
 from flask import Flask, render_template, request, abort, make_response, jsonify
-from datetime import datetime, timezone, timedelta
 import firebase_admin
 from firebase_admin import credentials, firestore
 cred = credentials.Certificate("firebasekey.json")
@@ -14,8 +12,8 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 with open('key.json', 'r', encoding='utf8') as jfile:
     jdata = json.load(jfile)
-line_bot_api = LineBotApi(jdata['token'])
-handler = WebhookHandler(jdata['channel'])
+line_bot_api = LineBotApi(jdata["token"])
+handler = WebhookHandler(jdata["channel"])
 
 
 app = Flask(__name__)
@@ -24,18 +22,6 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
-@app.route("/read")
-def read():
-    Result = ""
-    collection_ref = db.collection("靜宜資管")
-    docs = collection_ref.order_by(
-        "mail", direction=firestore.Query.DESCENDING).get()
-    for doc in docs:
-        Result += "文件內容：{}".format(doc.to_dict()) + "<br>"
-    return Result
-
 
 @app.route('/spider')
 def spider():
