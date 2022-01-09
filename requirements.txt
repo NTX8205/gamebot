@@ -1,5 +1,5 @@
-gunicorn
 flask
+gunicorn
 firebase_admin
 bs4
 APScheduler
