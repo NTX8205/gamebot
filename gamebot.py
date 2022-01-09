@@ -13,12 +13,11 @@ from firebase_admin import credentials, firestore
 cred = credentials.Certificate("firebasekey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
-line_bot_api = LineBotApi(
-    jdata['token'])
-handler = WebhookHandler(jdata['channel'])
-
 with open('setting.json', 'r', encoding='utf8') as jfile:
     jdata = json.load(jfile)
+line_bot_api = LineBotApi(jdata['token'])
+handler = WebhookHandler(jdata['channel'])
+
 
 app = Flask(__name__)
 
